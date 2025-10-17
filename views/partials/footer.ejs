@@ -1,0 +1,42 @@
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-gray-500 text-sm">
+                    &copy; 2024 BlogApp. Built with Node.js, Express, MongoDB, and Tailwind CSS.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auto-hide flash messages -->
+    <script>
+        // Auto-hide success messages after 5 seconds
+        setTimeout(function() {
+            const successMessages = document.querySelectorAll('.bg-green-100');
+            successMessages.forEach(function(message) {
+                message.style.transition = 'opacity 0.5s ease-out';
+                message.style.opacity = '0';
+                setTimeout(function() {
+                    message.remove();
+                }, 500);
+            });
+        }, 5000);
+
+        // Auto-hide error messages after 8 seconds
+        setTimeout(function() {
+            const errorMessages = document.querySelectorAll('.bg-red-100');
+            errorMessages.forEach(function(message) {
+                message.style.transition = 'opacity 0.5s ease-out';
+                message.style.opacity = '0';
+                setTimeout(function() {
+                    message.remove();
+                }, 500);
+            });
+        }, 8000);
+    </script>
+</body>
+</html>
+

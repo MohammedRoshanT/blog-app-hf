@@ -1,0 +1,106 @@
+<%- include('../partials/header') %>
+
+<div class="px-4 py-6 sm:px-0">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Edit Post</h1>
+            <p class="mt-2 text-gray-600">Update your post content and title.</p>
+        </div>
+
+        <!-- Form -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <form action="/posts/<%= post._id %>?_method=PUT" method="POST" class="p-8">
+                <div class="space-y-6">
+                    <!-- Title Field -->
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+                            Post Title <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="title" name="title" required maxlength="200" value="<%= post.title %>"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                               placeholder="Enter a compelling title for your post">
+                        <p class="mt-1 text-sm text-gray-500">Maximum 200 characters</p>
+                    </div>
+
+                    <!-- Content Field -->
+                    <div>
+                        <label for="content" class="block text-sm font-medium text-gray-700 mb-2">
+                            Post Content <span class="text-red-500">*</span>
+                        </label>
+                        <textarea id="content" name="content" rows="15" required
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                  placeholder="Write your post content here..."><%= post.content %></textarea>
+                        <p class="mt-1 text-sm text-gray-500">Minimum 10 characters</p>
+                    </div>
+
+                    <!-- Character Count -->
+                    <div class="text-sm text-gray-500">
+                        <span id="charCount"><%= post.content.length %></span> characters
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="mt-8 flex justify-end space-x-4">
+                    <a href="/posts/<%= post._id %>" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                        Cancel
+                    </a>
+                    <button type="submit" 
+                            class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Update Post
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Post Info -->
+        <div class="mt-8 bg-gray-50 rounded-lg p-6">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Post Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                    <span class="font-medium text-gray-700">Created:</span>
+                    <span class="text-gray-600 ml-2"><%= post.formattedDate %></span>
+                </div>
+                <div>
+                    <span class="font-medium text-gray-700">Author:</span>
+                    <span class="text-gray-600 ml-2"><%= post.author.username %></span>
+                </div>
+                <div>
+                    <span class="font-medium text-gray-700">Last Updated:</span>
+                    <span class="text-gray-600 ml-2"><%= post.updatedAt ? new Date(post.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Never' %></span>
+                </div>
+                <div>
+                    <span class="font-medium text-gray-700">Word Count:</span>
+                    <span class="text-gray-600 ml-2" id="wordCount">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Character count for content
+    const contentTextarea = document.getElementById('content');
+    const charCount = document.getElementById('charCount');
+    const wordCount = document.getElementById('wordCount');
+    
+    function updateCounts() {
+        const text = contentTextarea.value;
+        charCount.textContent = text.length;
+        
+        // Count words (split by whitespace and filter out empty strings)
+        const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+        wordCount.textContent = words.length;
+    }
+    
+    contentTextarea.addEventListener('input', updateCounts);
+    
+    // Update counts on page load
+    updateCounts();
+</script>
+
+<%- include('../partials/footer') %>
+

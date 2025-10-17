@@ -1,0 +1,56 @@
+<%- include('../partials/header') %>
+
+<div class="px-4 py-6 sm:px-0">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8">Admin Dashboard</h1>
+
+  <div class="grid gap-6 md:grid-cols-3 mb-8">
+    <div class="bg-white shadow rounded-lg p-6">
+      <div class="text-sm text-gray-500">Users</div>
+      <div class="text-3xl font-bold"><%= usersCount %></div>
+    </div>
+    <div class="bg-white shadow rounded-lg p-6">
+      <div class="text-sm text-gray-500">Posts</div>
+      <div class="text-3xl font-bold"><%= postsCount %></div>
+    </div>
+    <div class="bg-white shadow rounded-lg p-6">
+      <div class="text-sm text-gray-500">Comments</div>
+      <div class="text-3xl font-bold"><%= commentsCount %></div>
+    </div>
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-2">
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Latest Posts</h2>
+      <ul class="divide-y divide-gray-200">
+        <% latestPosts.forEach(function(post){ %>
+          <li class="py-3 flex items-center justify-between">
+            <div>
+              <div class="font-medium text-gray-900"><%= post.title %></div>
+              <div class="text-sm text-gray-500">by <%= post.author.username %></div>
+            </div>
+            <a href="/posts/<%= post._id %>" class="text-blue-600 hover:text-blue-800">View</a>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Latest Users</h2>
+      <ul class="divide-y divide-gray-200">
+        <% latestUsers.forEach(function(user){ %>
+          <li class="py-3 flex items-center justify-between">
+            <div>
+              <div class="font-medium text-gray-900"><%= user.username %></div>
+              <div class="text-sm text-gray-500"><%= user.email %></div>
+            </div>
+            <span class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-700"><%= user.role %></span>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+
